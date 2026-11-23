@@ -220,23 +220,6 @@
         color: var(--text-main);
       }
 
-      .speak-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: var(--text-muted);
-        padding: 0.1rem 0.35rem;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        flex-shrink: 0;
-        transition: all 0.15s;
-      }
-
-      .speak-btn:hover {
-        background: var(--primary-light);
-        color: var(--primary);
-      }
-
       .zh-text {
         font-size: 0.85rem;
         color: var(--text-sub);
@@ -284,13 +267,6 @@
         padding: 0.3rem 0.6rem;
         border-radius: 6px;
         font-size: 0.88rem;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-
-      .word-pill:hover {
-        border-color: var(--primary);
-        background: var(--primary-light);
       }
 
       .word-pill strong {
@@ -318,8 +294,7 @@
           <div>
             <h1>📘 My English Notes</h1>
             <div class="subtitle">
-              Spoken English, Workplace &amp; Vocabulary ·
-              点击句子或词卡即可听发音
+              Spoken English, Workplace &amp; Vocabulary
             </div>
           </div>
           <div class="search-box">
@@ -598,7 +573,7 @@
           ],
           vocabGroups: [
             {
-              label: "Texture · 食物口感词汇（点击听发音）",
+              label: "Texture · 食物口感词汇",
               words: [
                 { en: "crispy", zh: "酥脆的（如炸鸡皮、薯片）" },
                 { en: "crunchy", zh: "嘎嘣脆的（如坚果、生胡萝卜）" },
@@ -692,21 +667,6 @@
       const emptyState = document.getElementById("emptyState");
       const searchInput = document.getElementById("searchInput");
 
-      function speakText(text) {
-        if (!("speechSynthesis" in window)) {
-          alert("当前浏览器不支持语音朗读功能。");
-          return;
-        }
-        window.speechSynthesis.cancel();
-        const cleanText = text
-          .replace(/^\d+\.\s*/, "")
-          .replace(/\[Name\]/gi, "Sarah");
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = "en-US";
-        utterance.rate = 0.92;
-        window.speechSynthesis.speak(utterance);
-      }
-
       function renderFilters() {
         const categories = [
           "全部",
@@ -779,7 +739,6 @@
               <li class="phrase-item">
                 <div class="phrase-top">
                   <span class="en-text">${item.en}</span>
-                  <button class="speak-btn" title="点击朗读" onclick="speakText('${item.en.replace(/'/g, "\\'")}')">🔊</button>
                 </div>
                 <div class="zh-text">${item.zh}</div>
                 ${item.note ? `<span class="note-tag">${item.note}</span>` : ""}
@@ -802,11 +761,10 @@
               ${vg.words
                 .map(
                   (w) => `
-                <button class="word-pill" title="点击朗读 ${w.en}" onclick="speakText('${w.en.replace(/'/g, "\\'")}')">
+                <div class="word-pill">
                   <strong>${w.en}</strong>
                   <span>${w.zh}</span>
-                  <span>🔊</span>
-                </button>
+                </div>
               `,
                 )
                 .join("")}
