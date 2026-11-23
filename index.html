@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My English Notes | 英语口语与场景笔记</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-sub: #475569;
+        --text-muted: #94a3b8;
+        --primary: #2563eb;
+        --primary-light: #eff6ff;
+        --border: #e2e8f0;
+        --accent-green: #10b981;
+        --accent-amber: #f59e0b;
+        --accent-purple: #8b5cf6;
+        --shadow:
+          0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f172a;
+          --card-bg: #1e293b;
+          --text-main: #f1f5f9;
+          --text-sub: #cbd5e1;
+          --text-muted: #64748b;
+          --primary: #60a5fa;
+          --primary-light: rgba(59, 130, 246, 0.15);
+          --border: #334155;
+          --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC",
+          "Microsoft YaHei", sans-serif;
+        background-color: var(--bg);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding-bottom: 4rem;
+      }
+
+      header {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 1.75rem 1.25rem 1.25rem;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .container {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+      }
+
+      .header-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.1rem;
+      }
+
+      h1 {
+        font-size: 1.45rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+        color: var(--text-sub);
+      }
+
+      .search-box {
+        position: relative;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 0.5rem 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text-main);
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary);
+      }
+
+      .filters {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+      }
+
+      .filter-btn {
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text-sub);
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.15s;
+      }
+
+      .filter-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #ffffff;
+        font-weight: 500;
+      }
+
+      main {
+        margin-top: 1.75rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+        gap: 1.25rem;
+        align-items: start;
+      }
+
+      @media (max-width: 520px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.35rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px dashed var(--border);
+        padding-bottom: 0.7rem;
+        gap: 0.5rem;
+      }
+
+      .card-title {
+        font-size: 1.08rem;
+        font-weight: 650;
+        color: var(--primary);
+      }
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        background: var(--primary-light);
+        color: var(--primary);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      /* 句型列表样式 */
+      .phrase-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+      }
+
+      .phrase-item {
+        padding: 0.65rem 0.8rem;
+        border-radius: 8px;
+        background: var(--bg);
+      }
+
+      .phrase-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .en-text {
+        font-size: 0.98rem;
+        font-weight: 500;
+        color: var(--text-main);
+      }
+
+      .speak-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-muted);
+        padding: 0.1rem 0.35rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        transition: all 0.15s;
+      }
+
+      .speak-btn:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+
+      .zh-text {
+        font-size: 0.85rem;
+        color: var(--text-sub);
+        margin-top: 0.2rem;
+      }
+
+      .note-tag {
+        display: inline-block;
+        margin-top: 0.35rem;
+        font-size: 0.76rem;
+        color: var(--accent-amber);
+        background: rgba(245, 158, 11, 0.12);
+        padding: 0.1rem 0.5rem;
+        border-radius: 4px;
+      }
+
+      /* 词汇分组芯片样式（用于情绪分级、食物口感） */
+      .vocab-group {
+        background: var(--bg);
+        border-radius: 8px;
+        padding: 0.75rem 0.85rem;
+      }
+
+      .vocab-group-title {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text-sub);
+        margin-bottom: 0.55rem;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .word-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+
+      .word-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .word-pill:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+      }
+
+      .word-pill strong {
+        color: var(--text-main);
+        font-weight: 600;
+      }
+
+      .word-pill span {
+        color: var(--text-sub);
+        font-size: 0.8rem;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-muted);
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-top">
+          <div>
+            <h1>📘 My English Notes</h1>
+            <div class="subtitle">
+              Spoken English, Workplace &amp; Vocabulary ·
+              点击句子或词卡即可听发音
+            </div>
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="搜索英文、中文或场景..."
+            />
+          </div>
+        </div>
+        <div class="filters" id="filterBar"></div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="grid" id="notesGrid"></div>
+      <div class="empty-state" id="emptyState">
+        没有找到匹配的笔记，换个关键词试试吧。
+      </div>
+    </main>
+
+    <script>
+      const NOTES_DATA = [
+        {
+          category: "学习方法",
+          title: "Sleep & Review Routine",
+          tag: "Study Habits",
+          type: "phrases",
+          items: [
+            {
+              en: "1. Study English before you sleep for 15–30 minutes.",
+              zh: "睡前学习英语 15 到 30 分钟。",
+            },
+            {
+              en: "2. Listen to calm, clear English as you fall asleep.",
+              zh: "入睡时听语速平稳、发音清晰的英语。",
+            },
+            {
+              en: "3. Don't stress about understanding everything.",
+              zh: "不要因为没听懂全部内容而焦虑。",
+            },
+            { en: "4. Repeat and review.", zh: "不断重复与回顾。" },
+          ],
+        },
+        {
+          category: "日常沟通",
+          title: "Asking for Clarification",
+          tag: "未听清 / 确认意思",
+          type: "phrases",
+          items: [
+            { en: "What do you mean?", zh: "你是什么意思？" },
+            { en: "I'm sorry, I don't understand.", zh: "抱歉，我没听明白。" },
+            {
+              en: "Could you say that again, please?",
+              zh: "请问你能再说一遍吗？",
+              note: "礼貌请求复述",
+            },
+          ],
+        },
+        {
+          category: "日常沟通",
+          title: "Agreeing & Disagreeing",
+          tag: "赞同与委婉反驳",
+          type: "phrases",
+          items: [
+            {
+              en: "I agree with you.",
+              zh: "我同意你的看法。",
+              note: "AGREE · 赞同",
+            },
+            { en: "You're right.", zh: "你说得对。", note: "AGREE · 赞同" },
+            {
+              en: "That's a good point.",
+              zh: "这个观点很有道理。",
+              note: "AGREE · 赞同",
+            },
+            {
+              en: "I'm not sure about that.",
+              zh: "这一点我不太确定。",
+              note: "DISAGREE · 委婉反对",
+            },
+            {
+              en: "I see it differently.",
+              zh: "我对此有不同的看法。",
+              note: "DISAGREE · 委婉反对",
+            },
+            {
+              en: "That's an interesting point, but...",
+              zh: "这个角度很有意思，不过……",
+              note: "DISAGREE · 先肯定后转折",
+            },
+          ],
+        },
+        {
+          category: "日常寒暄",
+          title: "How are you?",
+          tag: "问候与回应",
+          type: "phrases",
+          items: [
+            { en: "How are you?", zh: "你好吗？/ 最近怎么样？" },
+            {
+              en: "I'm fine, thank you, and you?",
+              zh: "我很好，谢谢，你呢？",
+              note: "标准礼貌回答",
+            },
+            {
+              en: "I'm great, thanks. How about you?",
+              zh: "我挺棒的，谢谢。你怎么样？",
+              note: "更自然地道",
+            },
+            { en: "Not bad.", zh: "还不错。" },
+            {
+              en: "Could be better.",
+              zh: "一般般吧（本可以更好的）。",
+              note: "最近有点小状况/不太顺",
+            },
+          ],
+        },
+        {
+          category: "日常寒暄",
+          title: "How was your day?",
+          tag: "聊聊今天过得怎样",
+          type: "phrases",
+          items: [
+            { en: "How was your day?", zh: "你今天过得怎么样？" },
+            { en: "It was a good day, thanks.", zh: "今天过得很愉快，谢谢。" },
+            {
+              en: "Pretty good. I went for a walk.",
+              zh: "挺好的，我去散了散步。",
+            },
+            {
+              en: "Pretty good. I finished a big project at work.",
+              zh: "挺好的，我完成了工作上的一个大项目。",
+            },
+            {
+              en: "Honestly, it was a long day.",
+              zh: "说实话，今天真是漫长又疲惫的一天。",
+              note: "表示今天很累 (you are tired)",
+            },
+            {
+              en: "Nothing special, just a normal day.",
+              zh: "没什么特别的，就是普通的一天。",
+            },
+          ],
+        },
+        {
+          category: "职场与学习",
+          title: "In a Meeting",
+          tag: "会议插话与提建议",
+          type: "phrases",
+          items: [
+            {
+              en: "Could I say something?",
+              zh: "我可以插句话/说两句吗？",
+              note: "礼貌切入发言",
+            },
+            {
+              en: "I have a question, if I may.",
+              zh: "如果可以的话，我有一个问题。",
+              note: "正式场合提问",
+            },
+            {
+              en: "I'd like to suggest...",
+              zh: "我想建议……",
+              note: "提出具体方案",
+            },
+            {
+              en: "What if we tried this?",
+              zh: "要是我们试试这个办法怎么样？",
+              note: "温和试探性提议",
+            },
+          ],
+        },
+        {
+          category: "职场与学习",
+          title: "In School / Class",
+          tag: "课堂提问与举例",
+          type: "phrases",
+          items: [
+            {
+              en: "I'm sorry. Could you explain that again?",
+              zh: "不好意思，您能再解释一遍那个知识点吗？",
+            },
+            { en: "Could you give an example?", zh: "您能举个例子吗？" },
+          ],
+        },
+        {
+          category: "职场与学习",
+          title: "Writing Emails",
+          tag: "邮件开头与落款",
+          type: "phrases",
+          items: [
+            {
+              en: "Dear [Name],",
+              zh: "尊敬的 [名字] / 亲爱的 [名字]，",
+              note: "开头 · 正式/半正式",
+            },
+            {
+              en: "Hi [Name],",
+              zh: "你好 [名字]，",
+              note: "开头 · 日常工作往来",
+            },
+            {
+              en: "Best regards,",
+              zh: "致以最诚挚的问候，",
+              note: "结尾 · 最通用得体",
+            },
+            {
+              en: "Kind regards,",
+              zh: "谨上 / 顺颂商祺，",
+              note: "结尾 · 友好礼貌",
+            },
+            { en: "Thank you,", zh: "谢谢，", note: "结尾 · 请求协助后常用" },
+            {
+              en: "Warm wishes,",
+              zh: "致以美好的祝愿，",
+              note: "结尾 · 较亲切温暖",
+            },
+          ],
+        },
+        {
+          category: "饮食与购物",
+          title: "Ordering at a Restaurant",
+          tag: "点餐与结账",
+          type: "phrases",
+          items: [
+            {
+              en: "Are you ready to order?",
+              zh: "您准备好点餐了吗？",
+              note: "服务员常用语",
+            },
+            { en: "Yes, I'd like the pasta.", zh: "是的，我想要这份意面。" },
+            { en: "I'll have the pasta, please.", zh: "请给我来一份意面。" },
+            {
+              en: "Could we have a few more minutes, please?",
+              zh: "请问可以再给我们几分钟看看菜单吗？",
+            },
+            { en: "What do you recommend?", zh: "你有什么推荐的菜吗？" },
+            {
+              en: "What's the most popular dish?",
+              zh: "这里最受欢迎的菜是哪道？",
+            },
+            {
+              en: "Could I have the bill, please?",
+              zh: "请帮我结账（英式常用 bill）。",
+            },
+            {
+              en: "Could I have the check, please?",
+              zh: "请帮我结账（美式常用 check）。",
+            },
+          ],
+        },
+        {
+          category: "饮食与购物",
+          title: "Describing Food & Taste",
+          tag: "评价口味与口感",
+          type: "phrases",
+          items: [
+            {
+              en: "It's delicious. / It tastes so good.",
+              zh: "真好吃 / 味道太棒了。",
+              note: "好评",
+            },
+            {
+              en: "It's amazing. / It's wonderful.",
+              zh: "太惊艳了 / 棒极了。",
+              note: "高度赞美",
+            },
+            {
+              en: "It's not really my thing.",
+              zh: "这道菜不太合我的口味。",
+              note: "委婉表达不喜欢",
+            },
+            { en: "It's a bit too salty for me.", zh: "对我来说有点太咸了。" },
+            { en: "It's a bit bland.", zh: "味道有点淡 / 寡淡无味。" },
+          ],
+          vocabGroups: [
+            {
+              label: "Texture · 食物口感词汇（点击听发音）",
+              words: [
+                { en: "crispy", zh: "酥脆的（如炸鸡皮、薯片）" },
+                { en: "crunchy", zh: "嘎嘣脆的（如坚果、生胡萝卜）" },
+                { en: "soft", zh: "松软的" },
+                { en: "chewy", zh: "有嚼劲的 / Q弹的" },
+                { en: "creamy", zh: "丝滑浓郁的 / 奶油般的" },
+                { en: "smooth", zh: "细腻顺滑的" },
+              ],
+            },
+          ],
+        },
+        {
+          category: "饮食与购物",
+          title: "Shopping",
+          tag: "购物询价与挑选",
+          type: "phrases",
+          items: [
+            { en: "How much is this?", zh: "这个多少钱？" },
+            { en: "How much does this cost?", zh: "这个要花多少钱？" },
+            {
+              en: "I'll take it.",
+              zh: "我买了 / 我要这个了。",
+              note: "决定购买时最地道",
+            },
+            { en: "I'd like to buy this, please.", zh: "我想买这个。" },
+            {
+              en: "That's a bit expensive. Is there anything cheaper?",
+              zh: "这有点贵，有便宜一点的吗？",
+            },
+            {
+              en: "Do you have this in a different size?",
+              zh: "这件有其他尺码吗？",
+            },
+            {
+              en: "Do you have this in a different color?",
+              zh: "这件有其他颜色吗？",
+            },
+          ],
+        },
+        {
+          category: "情绪词汇",
+          title: "Emotions by Intensity",
+          tag: "不同程度的情绪表达",
+          type: "vocab",
+          vocabGroups: [
+            {
+              label: "😊 HAPPY · 开心（程度递进 / 语境区分）",
+              words: [
+                { en: "content", zh: "满足的、惬意的" },
+                { en: "joyful", zh: "愉悦的、充满喜悦的" },
+                { en: "delighted", zh: "欣喜的、很高兴的" },
+                { en: "thrilled", zh: "极其兴奋的、激动的" },
+              ],
+            },
+            {
+              label: "🤩 EXCITED · 兴奋（程度递进）",
+              words: [
+                { en: "pumped up", zh: "干劲十足的、情绪高涨的（口语）" },
+                { en: "thrilled", zh: "非常激动的" },
+                { en: "overjoyed", zh: "狂喜的、喜出望外的" },
+                { en: "ecstatic", zh: "欣喜若狂的（程度极强）" },
+              ],
+            },
+            {
+              label: "😔 SAD · 难过（程度与色彩区分）",
+              words: [
+                { en: "down", zh: "情绪低落的、不开心的" },
+                { en: "disappointed", zh: "失望的" },
+                { en: "melancholy", zh: "忧郁的、伤感的（偏文艺）" },
+                { en: "heartbroken", zh: "心碎的、极度悲痛的" },
+              ],
+            },
+            {
+              label: "😠 ANGRY · 生气（程度递进）",
+              words: [
+                { en: "annoyed", zh: "有点烦躁的、恼火的" },
+                { en: "upset", zh: "心烦意乱的、不高兴的" },
+                { en: "frustrated", zh: "沮丧懊恼的（因受阻而生气）" },
+                { en: "furious", zh: "暴怒的、狂怒的（程度极强）" },
+              ],
+            },
+          ],
+        },
+      ];
+
+      let currentCategory = "全部";
+      let searchQuery = "";
+
+      const filterBar = document.getElementById("filterBar");
+      const notesGrid = document.getElementById("notesGrid");
+      const emptyState = document.getElementById("emptyState");
+      const searchInput = document.getElementById("searchInput");
+
+      function speakText(text) {
+        if (!("speechSynthesis" in window)) {
+          alert("当前浏览器不支持语音朗读功能。");
+          return;
+        }
+        window.speechSynthesis.cancel();
+        const cleanText = text
+          .replace(/^\d+\.\s*/, "")
+          .replace(/\[Name\]/gi, "Sarah");
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = "en-US";
+        utterance.rate = 0.92;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function renderFilters() {
+        const categories = [
+          "全部",
+          ...new Set(NOTES_DATA.map((n) => n.category)),
+        ];
+        filterBar.innerHTML = categories
+          .map(
+            (cat) => `
+        <button class="filter-btn ${cat === currentCategory ? "active" : ""}" data-cat="${cat}">
+          ${cat}
+        </button>
+      `,
+          )
+          .join("");
+
+        filterBar.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            currentCategory = btn.dataset.cat;
+            renderFilters();
+            renderCards();
+          });
+        });
+      }
+
+      function renderCards() {
+        const q = searchQuery.trim().toLowerCase();
+        let html = "";
+        let count = 0;
+
+        NOTES_DATA.forEach((group) => {
+          if (currentCategory !== "全部" && group.category !== currentCategory)
+            return;
+
+          const filteredItems = (group.items || []).filter((item) => {
+            if (!q) return true;
+            return (
+              item.en.toLowerCase().includes(q) ||
+              item.zh.toLowerCase().includes(q) ||
+              (item.note && item.note.toLowerCase().includes(q)) ||
+              group.title.toLowerCase().includes(q)
+            );
+          });
+
+          const filteredVocabGroups = (group.vocabGroups || [])
+            .map((vg) => {
+              const matchedWords = vg.words.filter((w) => {
+                if (!q) return true;
+                return (
+                  w.en.toLowerCase().includes(q) ||
+                  w.zh.toLowerCase().includes(q) ||
+                  vg.label.toLowerCase().includes(q) ||
+                  group.title.toLowerCase().includes(q)
+                );
+              });
+              return { ...vg, words: matchedWords };
+            })
+            .filter((vg) => vg.words.length > 0);
+
+          if (filteredItems.length === 0 && filteredVocabGroups.length === 0)
+            return;
+          count++;
+
+          const itemsHtml =
+            filteredItems.length > 0
+              ? `
+          <ul class="phrase-list">
+            ${filteredItems
+              .map(
+                (item) => `
+              <li class="phrase-item">
+                <div class="phrase-top">
+                  <span class="en-text">${item.en}</span>
+                  <button class="speak-btn" title="点击朗读" onclick="speakText('${item.en.replace(/'/g, "\\'")}')">🔊</button>
+                </div>
+                <div class="zh-text">${item.zh}</div>
+                ${item.note ? `<span class="note-tag">${item.note}</span>` : ""}
+              </li>
+            `,
+              )
+              .join("")}
+          </ul>
+        `
+              : "";
+
+          const vocabHtml = filteredVocabGroups
+            .map(
+              (vg) => `
+          <div class="vocab-group">
+            <div class="vocab-group-title">
+              <span>${vg.label}</span>
+            </div>
+            <div class="word-pills">
+              ${vg.words
+                .map(
+                  (w) => `
+                <button class="word-pill" title="点击朗读 ${w.en}" onclick="speakText('${w.en.replace(/'/g, "\\'")}')">
+                  <strong>${w.en}</strong>
+                  <span>${w.zh}</span>
+                  <span>🔊</span>
+                </button>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        `,
+            )
+            .join("");
+
+          html += `
+          <section class="card">
+            <div class="card-header">
+              <h2 class="card-title">${group.title}</h2>
+              <span class="badge">${group.tag}</span>
+            </div>
+            ${itemsHtml}
+            ${vocabHtml}
+          </section>
+        `;
+        });
+
+        notesGrid.innerHTML = html;
+        emptyState.style.display = count === 0 ? "block" : "none";
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        renderCards();
+      });
+
+      renderFilters();
+      renderCards();
+    </script>
+  </body>
+</html>
