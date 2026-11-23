@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duolingo 视频对话纠错 | My English Notes</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="top-nav">
+          <a href="index.html" class="back-link">← 返回笔记索引</a>
+          <div class="nav-links">
+            <a href="youtube.html" class="nav-pill">📺 YouTube 笔记</a>
+            <a href="duolingo-quiz.html" class="nav-pill">🦉 Duolingo 习题</a>
+            <a href="duolingo-talk.html" class="nav-pill active">🗣️ Duolingo 对话</a>
+          </div>
+        </div>
+        <div class="header-top">
+          <div>
+            <h1>🗣️ Duolingo 视频对话纠错</h1>
+            <div class="subtitle">
+              实时视频口语薄弱项归纳 · 冠词、泛指复数、时态与地道搭配
+            </div>
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="搜索口语纠错点、短语或场景..."
+            />
+          </div>
+        </div>
+        <div class="filters" id="filterBar"></div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="grid" id="notesGrid"></div>
+      <div class="empty-state" id="emptyState">
+        没有找到匹配的口语笔记，换个关键词试试吧。
+      </div>
+    </main>
+
+    <script src="notes-renderer.js"></script>
+    <script>
+      const DUOLINGO_TALK_NOTES = [
+        {
+          category: "冠词与单复数",
+          title: "Articles & General Plurals",
+          tag: "最高频口语痛点：the 的去留与泛指复数",
+          type: "phrases",
+          items: [
+            {
+              en: "The team is more important than an individual superstar.",
+              zh: "团队比个人超级巨星更重要。",
+              note: "单数可数名词 superstar 不能裸奔，前需加冠词 an",
+            },
+            {
+              en: "It's an interesting place. / It's an interesting topic.",
+              zh: "这是一个有趣的地方。/ 这是一个有趣的话题。",
+              note: "元音音素开头的可数名词单数前用 an",
+            },
+            {
+              en: "I went to a tall building. / I usually see people there.",
+              zh: "我去了一栋高楼。/ 我通常在那里看到人们。",
+              note: "单数可数加 a；复数泛指 people 不加 the",
+            },
+          ],
+          vocabGroups: [
+            {
+              label: "🚫 泛指不加 the（不可数 / 运动 / 音乐 / 时间）",
+              words: [
+                { en: "watch golf", zh: "看高尔夫" },
+                { en: "popular / light music", zh: "流行/轻音乐" },
+                { en: "enjoy / feel nature", zh: "享受/感受自然" },
+                { en: "popcorn / shrimp", zh: "爆米花/虾（不可数）" },
+                { en: "on weeknights", zh: "在工作日晚上（不加 the）" },
+                { en: "this weekend", zh: "这周末（前不加 on）" },
+              ],
+            },
+            {
+              label: "🔢 泛指一类事物要用复数（且不加 the）",
+              words: [
+                { en: "watch movies / documentaries", zh: "看电影/纪录片" },
+                { en: "romance / sci-fi movies", zh: "爱情片/科幻片" },
+                { en: "ancient fantasy movies", zh: "古装奇幻电影" },
+                { en: "funny shows", zh: "搞笑节目" },
+                { en: "create smart websites", zh: "制作智能网站" },
+                { en: "on websites / AI chat platforms", zh: "在网站/AI聊天平台上" },
+                { en: "musical instruments", zh: "乐器" },
+                { en: "game consoles", zh: "游戏机" },
+                { en: "English skills", zh: "各项英语技能" },
+                { en: "accept the suggestions", zh: "接受建议（用复数）" },
+                { en: "some beverages / brochures", zh: "一些饮料/宣传册" },
+                { en: "write some essays", zh: "写一些文章" },
+                { en: "bright stars / robots / monks", zh: "明亮的星星/机器人/僧侣" },
+              ],
+            },
+            {
+              label: "📍 特定场所与唯一事物需加 the / a",
+              words: [
+                { en: "on the internet", zh: "在互联网上" },
+                { en: "all over the earth", zh: "遍布全球" },
+                { en: "at the office", zh: "在办公室" },
+                { en: "on the way to the office", zh: "去办公室的路上" },
+                { en: "at the stadium / at the party", zh: "在体育场/在派对上" },
+                { en: "go to the supermarket / the park", zh: "去超市/去公园" },
+                { en: "near the movie theater", zh: "在电影院附近" },
+                { en: "on the sofa / in the soil", zh: "在沙发上/在土壤里" },
+                { en: "the result of the game", zh: "比赛的结果" },
+                { en: "fight the enemy", zh: "与敌人战斗" },
+                { en: "go to a cafe / at a gym", zh: "去咖啡馆/在健身房" },
+              ],
+            },
+          ],
+        },
+        {
+          category: "动词与选词纠错",
+          title: "Verb Collocations & Word Choice",
+          tag: "及物/不及物搭配与形容词辨析",
+          type: "phrases",
+          items: [
+            {
+              en: "I've been lying down for a whole day.",
+              zh: "我躺了一整天了。",
+              note: "重要提醒 · 单独说 I've been lying 易被误解为“撒谎了一整天”",
+            },
+            {
+              en: "It makes me laugh. / It made me feel relaxed.",
+              zh: "它让我发笑。/ 它让我感到放松。",
+              note: "make sb. do sth. 后接不带 to 的动词原形",
+            },
+            {
+              en: "I go to the park to relax. / What do you do to relax?",
+              zh: "我去公园放松。/ 你做什么来放松？",
+              note: "动词不定式 to relax 表目的",
+            },
+            {
+              en: "I search for some soft music to improve my mood.",
+              zh: "我搜索一些轻柔的音乐来改善心情。",
+              note: "search for 搜寻某物（不能漏掉 for）",
+            },
+          ],
+          vocabGroups: [
+            {
+              label: "⚡ 及物 vs. 不及物与非谓语结构",
+              words: [
+                { en: "avoid doing sth.", zh: "避免做某事（接 -ing）" },
+                { en: "discuss sth.", zh: "讨论某事（及物，不加 about）" },
+                { en: "maintain it / reach a new planet", zh: "维护它 / 到达新星球（及物）" },
+                { en: "talk about / learn about", zh: "谈论 / 了解（加 about）" },
+                { en: "pray for / share ... with", zh: "为……祈祷 / 与……分享" },
+                { en: "like drinking / breathing", zh: "喜欢喝 / 呼吸" },
+                { en: "prefer to play", zh: "更喜欢玩" },
+              ],
+            },
+            {
+              label: "🎯 易混词与单复数陷阱",
+              words: [
+                { en: "exciting / intense", zh: "形容比赛激烈（勿用 nervous）" },
+                { en: "I feel relaxed / I don't feel nervous", zh: "人感到放松/不紧张" },
+                { en: "It's very refreshing.", zh: "非常清爽宜人" },
+                { en: "She's very emotional. / It was so emotional.", zh: "很感性 / 很感人" },
+                { en: "every two months", zh: "每两个月（month 必须复数）" },
+                { en: "sports equipment", zh: "运动器材（不可数）" },
+                { en: "knowledge about the world", zh: "关于世界的知识（不可数）" },
+                { en: "Maybe... 或 I think...", zh: "二选一，避免 Maybe I think 连用" },
+              ],
+            },
+          ],
+        },
+        {
+          category: "时态与比较级",
+          title: "Tenses & Comparatives in Action",
+          tag: "过去经历 vs. 客观事实与比较级",
+          type: "phrases",
+          items: [
+            {
+              en: "The Gundam Series was the most interesting episode.",
+              zh: "《高达》系列是最有趣的一部。",
+              note: "系列名作单数用 was；five years ago 等过去时间用过去式",
+            },
+            {
+              en: "When I went on a trip, I found beautiful rocks and went hiking.",
+              zh: "当我去旅行时，我发现了漂亮的石头并去了徒步。",
+              note: "回忆过去旅行经历时，动词保持过去式 (went / found / ate / tasted)",
+            },
+            {
+              en: "Interesting things that happened yesterday.",
+              zh: "昨天发生的有趣的事情。",
+              note: "that 引导定语从句修饰先行词 things",
+            },
+            {
+              en: "I thought it was difficult, but it's easier to learn than to know.",
+              zh: "我原以为很难（过去式 thought），但学起来比懂起来容易。",
+            },
+            {
+              en: "When I travel, I read a lot of history and some brochures.",
+              zh: "当我旅行时，我会读很多历史资料和宣传册。",
+              note: "描述平时习惯或客观事实用一般现在时 (travel / go to / is)",
+            },
+            {
+              en: "A hair dryer is a much more useful tool than a towel to blow dry his fur.",
+              zh: "吹风机是比毛巾有用得多的吹毛工具。",
+              note: "much more useful 比较级前用 much 加强程度",
+            },
+          ],
+        },
+        {
+          category: "对话场景句库",
+          title: "Conversation Topic Phrases",
+          tag: "宠物、运动、科技与日常闲聊",
+          type: "phrases",
+          items: [
+            {
+              en: "He's very patient when it comes to his snacks.",
+              zh: "一说到他的零食，他就非常有耐心。",
+              note: "when it comes to... 当涉及到……",
+            },
+            {
+              en: "He's a big eater so he has become too fat.",
+              zh: "他是个大胃王，所以变得太胖了。",
+            },
+            {
+              en: "He likes dog biscuits and chicken as a reward.",
+              zh: "他喜欢把狗饼干和鸡肉作为奖励。",
+            },
+            {
+              en: "I give him a bath and he enjoys it much more.",
+              zh: "我给它洗澡，它现在喜欢多了。",
+            },
+            {
+              en: "The Lakers have a good team spirit. Each player puts in a great effort.",
+              zh: "湖人队有很好的团队精神。每位球员都付出了巨大努力。",
+            },
+            {
+              en: "There are many people living in the same building, two kilometers away from here.",
+              zh: "有很多人住在离这里两公里远的同一栋楼里。",
+            },
+            {
+              en: "After the movie ends, we have a lot to talk about.",
+              zh: "电影结束后，我们有很多可以聊的。",
+            },
+            {
+              en: "There are many explosions in the exciting parts.",
+              zh: "在精彩刺激的片段里有很多爆炸场面。",
+            },
+            {
+              en: "He told me that Japanese people are not good at English.",
+              zh: "他告诉我日本人不擅长英语。",
+            },
+          ],
+          vocabGroups: [
+            {
+              label: "💬 视频对话地道短语速查",
+              words: [
+                { en: "scroll through my phone", zh: "刷手机" },
+                { en: "keep up with it", zh: "跟上它" },
+                { en: "relive the past", zh: "重温过去" },
+                { en: "hide and seek", zh: "捉迷藏" },
+                { en: "time flies", zh: "时间飞逝" },
+                { en: "hold the leash tightly", zh: "紧紧牵着狗绳" },
+                { en: "go on long walks", zh: "长途散步" },
+                { en: "My legs hurt.", zh: "我的腿疼" },
+                { en: "get some rest / get sleepy", zh: "休息一下 / 犯困" },
+                { en: "at a time", zh: "一次、每次" },
+                { en: "a mix of...", zh: "……的结合/混合物" },
+                { en: "either lunch or dinner", zh: "午餐或晚餐" },
+                { en: "beef flavored noodles", zh: "牛肉味面条" },
+                { en: "without much preparation", zh: "无需太多准备" },
+              ],
+            },
+          ],
+        },
+      ];
+
+      initNotesPage(DUOLINGO_TALK_NOTES);
+    </script>
+  </body>
+</html>

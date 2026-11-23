@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duolingo 习题背诵 (79句) | My English Notes</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="top-nav">
+          <a href="index.html" class="back-link">← 返回笔记索引</a>
+          <div class="nav-links">
+            <a href="youtube.html" class="nav-pill">📺 YouTube 笔记</a>
+            <a href="duolingo-quiz.html" class="nav-pill active">🦉 Duolingo 习题</a>
+            <a href="duolingo-talk.html" class="nav-pill">🗣️ Duolingo 对话</a>
+          </div>
+        </div>
+        <div class="header-top">
+          <div>
+            <h1>🦉 Duolingo 习题背诵库</h1>
+            <div class="subtitle">
+              完整收录 79 条错题与重点句型 · 附语法考点提示
+            </div>
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="搜索习题英文、中文或语法点..."
+            />
+          </div>
+        </div>
+        <div class="filters" id="filterBar"></div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="grid" id="notesGrid"></div>
+      <div class="empty-state" id="emptyState">
+        没有找到匹配的习题句子，换个关键词试试吧。
+      </div>
+    </main>
+
+    <script src="notes-renderer.js"></script>
+    <script>
+      const DUOLINGO_QUIZ_NOTES = [
+        {
+          category: "用车与出行",
+          title: "1. Car, Repairs & Travel",
+          tag: "用车维修与旅行住宿（12句）",
+          type: "phrases",
+          items: [
+            {
+              en: "Wait until Dad hears how much the repairs are going to cost!",
+              zh: "等爸爸听说修理要花多少钱吧！",
+              note: "主将从现 · until 引导时间状语从句用一般现在时 hears",
+            },
+            {
+              en: "For some reason, that headlight still hasn't been fixed.",
+              zh: "不知道为什么，那只前灯到现在还没修好。",
+              note: "现在完成时被动语态 · hasn't been fixed",
+            },
+            {
+              en: "How much do I owe you for the headlight repairs?",
+              zh: "我该为前灯的修理付你多少钱？",
+              note: "owe sb. for sth. 因某事欠某人钱",
+            },
+            {
+              en: "I need to take the van to the car wash before the wedding.",
+              zh: "我得在婚礼前把面包车开到洗车店。",
+            },
+            {
+              en: "It's only been driven a few times.",
+              zh: "只开过几次而已。",
+              note: "现在完成时被动语态 · has been driven",
+            },
+            {
+              en: "But I'm sure I put it in the trunk at the gas station.",
+              zh: "可我肯定我是在加油站把它放进后备箱的。",
+            },
+            {
+              en: "Take the bags out of the trunk and put them on the sidewalk.",
+              zh: "从后备箱里把袋子拿出来，放在人行道上。",
+            },
+            {
+              en: "She sped up when she saw the bus.",
+              zh: "她看见公交车时加快了速度。",
+              note: "speed up 加速（过去式 sped up）",
+            },
+            {
+              en: "Why did you get a one-way ticket?",
+              zh: "为什么你买了一张单程票？",
+            },
+            {
+              en: "I packed a spare bag in my suitcase.",
+              zh: "我在行李箱里装了一个备用包。",
+            },
+            {
+              en: "Let's stay at the beach resort.",
+              zh: "我们住在海滩度假村吧。",
+            },
+            {
+              en: "We loved our stay at the hotel near the bus stop.",
+              zh: "我们很喜欢在公交车站附近那家酒店的住宿体验。",
+              note: "stay 在此作名词，意为“停留、暂住”",
+            },
+          ],
+        },
+        {
+          category: "租房与搬家",
+          title: "2. Housing, Rent & Moving",
+          tag: "租房、水电费与搬家（13句）",
+          type: "phrases",
+          items: [
+            {
+              en: "I definitely don't want to live on the ground floor.",
+              zh: "我绝对不想住在一楼。",
+              note: "definitely 一般放在助动词/be动词后、实义动词前，也可放句首",
+            },
+            {
+              en: "We signed the lease for a ground floor apartment.",
+              zh: "我们签了底楼公寓的租约。",
+            },
+            {
+              en: "Before you sign a lease, check the cost of utilities.",
+              zh: "在签租约之前，核实水电费要花多少钱。",
+              note: "sign a lease 签租约 · utilities 水电燃气等公共事业费",
+            },
+            {
+              en: "The total payment includes your first and last month's rent.",
+              zh: "总付款包括你的第一个月和最后一个月的房租。",
+              note: "first 和 last 共同修饰 month，共享一个所有格 's",
+            },
+            {
+              en: "I pay the electricity bill, and he pays for other utilities.",
+              zh: "我付电费，他付其它公共事业费。",
+              note: "pay 后面直接跟具体账单(bill)不用加 for；笼统付费加 for",
+            },
+            {
+              en: "Five hundred dollars is the total amount I can afford.",
+              zh: "五百美元是我能负担得起的总额。",
+              note: "金额整体作主语时，谓语动词用单数 is",
+            },
+            {
+              en: "What's the total number of apartments you have available?",
+              zh: "你们可提供的公寓总数是多少？",
+            },
+            {
+              en: "Due to the cost, we decided to buy an older home.",
+              zh: "因为费用，我们决定买一套较旧的房子。",
+              note: "due to 因为、由于",
+            },
+            {
+              en: "I can't believe we own this beautiful home!",
+              zh: "我不敢相信我们拥有这栋美丽的房子！",
+            },
+            {
+              en: "Oh no, the coffee table fell out of the moving truck!",
+              zh: "糟了，咖啡桌从搬家卡车上掉下来了！",
+            },
+            {
+              en: "We shouldn't put Mom's antique dresser on the moving truck.",
+              zh: "我们不应该把妈妈的古董梳妆台放到搬家卡车上。",
+            },
+            {
+              en: "I still can't see my coffee table under all those boxes!",
+              zh: "我仍然看不到在那些箱子下面的我的咖啡桌！",
+            },
+            {
+              en: "Let's make some changes to this place.",
+              zh: "咱们对这个地方做一些改动吧。",
+              note: "make changes to... 对……做出改动（介词用 to）",
+            },
+          ],
+        },
+        {
+          category: "职场与休假",
+          title: "3. Career, Projects & Time Off",
+          tag: "职场、项目会议与休假（14句）",
+          type: "phrases",
+          items: [
+            {
+              en: "Luke will be an amazing boss after he gains more experience.",
+              zh: "Luke会在他获得更多经验之后成为一位了不起的老板。",
+              note: "主将从现 · after 从句用一般现在时 gains；experience(经验)不可数",
+            },
+            {
+              en: "After I become president, I will buy the company!",
+              zh: "在我成为总统之后，我会买下那家公司！",
+              note: "主将从现 · 独一无二的职位(president)作表语不加冠词",
+            },
+            {
+              en: "What experience did you gain during your summer internship?",
+              zh: "你在暑期实习期间获得了什么经验？",
+              note: "gain experience 获得经验",
+            },
+            {
+              en: "I'm working on writing my speech for next week's conference.",
+              zh: "我正在写下周会议的演讲稿。",
+              note: "work on doing sth. 致力于/着手做某事",
+            },
+            {
+              en: "I'd like you to work on creating a new software program.",
+              zh: "我希望你着手开发一个新的软件程序。",
+            },
+            {
+              en: "I've been working on an exciting new project!",
+              zh: "我一直在做一个令人兴奋的新项目！",
+              note: "现在完成进行时 have been working on",
+            },
+            {
+              en: "A famous author will be speaking at the conference!",
+              zh: "一位著名作家将在会议上演讲！",
+              note: "将来进行时 will be speaking",
+            },
+            {
+              en: "As soon as I earn a million dollars, I'll open another cafe.",
+              zh: "我一赚到一百万美元，就会再开一家咖啡馆。",
+              note: "主将从现 · as soon as 一……就……",
+            },
+            {
+              en: "I'd like to talk to my manager about a possible promotion.",
+              zh: "我想就可能的晋升和我的经理谈谈。",
+            },
+            {
+              en: "Benefits include over ten days of vacation.",
+              zh: "福利包括超过十天的假期。",
+            },
+            {
+              en: "We need more time off.",
+              zh: "我们需要更多的休假时间。",
+              note: "time off 休假时间",
+            },
+            {
+              en: "Poor Lisa wasn't able to take a break yesterday.",
+              zh: "可怜的丽莎昨天没能休息。",
+              note: "be able to do 能够做 · take a break 休息一下",
+            },
+            {
+              en: "In 2005, I hadn't worked full-time before that.",
+              zh: "在2005年，在那之前我还没有全职工作过。",
+              note: "过去完成时 hadn't worked（过去的过去）",
+            },
+            {
+              en: "We'd be very grateful for your help.",
+              zh: "我们会非常感激您的帮助。",
+              note: "be grateful for sth. 对某事心存感激",
+            },
+          ],
+        },
+        {
+          category: "学习与进步",
+          title: "4. Study, Exams & Progress",
+          tag: "学习、考试与进步（5句）",
+          type: "phrases",
+          items: [
+            {
+              en: "We study engineering at the university.",
+              zh: "我们在大学学习工程学。",
+              note: "engineering 是学科专业名词（不可数），泛指不加 the",
+            },
+            {
+              en: "When I took the test, I saw how much progress I had made!",
+              zh: "当我参加考试的时候，我看到了自己取得了多少进步！",
+              note: "make progress 取得进步（不可数，用 much）；过去完成时 had made",
+            },
+            {
+              en: "I've made so much progress since the first class!",
+              zh: "从第一节课开始，我进步了好多！",
+              note: "since + 过去时间点，主句用现在完成时 have made",
+            },
+            {
+              en: "My students are making a lot of progress.",
+              zh: "我的学生正在取得很大进步。",
+            },
+            {
+              en: "Don't worry, I never cheat on tests.",
+              zh: "别担心，我从不在考试中作弊。",
+              note: "cheat on tests 考试作弊（介词用 on）",
+            },
+          ],
+        },
+        {
+          category: "消息与人际",
+          title: "5. News, Feelings & Relationships",
+          tag: "消息、情感与人际交往（17句）",
+          type: "phrases",
+          items: [
+            {
+              en: "I have some news for you, and you're not going to like it.",
+              zh: "我有些消息要跟你说，你不会喜欢的。",
+              note: "news 不可数，后文用单数代词 it 指代",
+            },
+            {
+              en: "Sorry for calling so late, but I have some news.",
+              zh: "不好意思这么晚打电话，不过我有些消息。",
+            },
+            {
+              en: "Sorry that Anita left you, Tom, that's too bad.",
+              zh: "很遗憾安妮塔离开了你，汤姆，那太糟糕了。",
+              note: "连词 that 引导从句说明感到遗憾的原因",
+            },
+            {
+              en: "Too bad I didn't realize sooner that he's married!",
+              zh: "真可惜我没早点知道他结婚了！",
+            },
+            {
+              en: "Seeing everyone here today helps us with our loss.",
+              zh: "今天看到大家都在这里，让我们的哀伤得到缓解。",
+              note: "动名词短语 Seeing... 作主语，谓语动词用单数 helps",
+            },
+            {
+              en: "This is a huge loss for all of us.",
+              zh: "这对我们所有人来说是一个巨大的损失。",
+            },
+            {
+              en: "Grandma will be in our hearts forever.",
+              zh: "奶奶永远活在我们心里。",
+            },
+            {
+              en: "Anna hasn't been seeing Max again, has she?",
+              zh: "安娜一直没有在和麦克斯交往，对吧？",
+              note: "see sb. 与某人交往；反意疑问句前否后肯",
+            },
+            {
+              en: "My brother is dating my boss!",
+              zh: "我的兄弟在和我的老板谈恋爱！",
+            },
+            {
+              en: "We've set the date, and now I'm feeling nervous!",
+              zh: "我们把日期定好了，现在我有点紧张！",
+            },
+            {
+              en: "The baby has green eyes, like their son-in-law.",
+              zh: "这个宝宝有绿色的眼睛，像他们的女婿。",
+              note: "son-in-law 女婿",
+            },
+            {
+              en: "My great-grandparents have had many parties.",
+              zh: "我的曾祖父母办过很多聚会。",
+              note: "现在完成时 have had",
+            },
+            {
+              en: "The police officer asked if I wanted her to call my parents.",
+              zh: "警察询问我是否要她给我父母打电话。",
+              note: "间接引语 · asked 过去式，if 从句用一般过去时 wanted",
+            },
+            {
+              en: "My friend told me that story two days ago.",
+              zh: "我的朋友两天前给我讲了那个故事。",
+            },
+            {
+              en: "Yes, according to my friend, he will come tonight.",
+              zh: "是的，据我朋友说，他今晚会来。",
+              note: "according to... 据……所说",
+            },
+            {
+              en: "Talk to you soon, bye!",
+              zh: "有空再聊，拜！",
+            },
+            {
+              en: "Her phone has rung twice in the past five minutes!",
+              zh: "她的手机在过去五分钟里响了两次！",
+              note: "ring-rang-rung · in the past + 时间段 用现在完成时",
+            },
+          ],
+        },
+        {
+          category: "礼仪与日常",
+          title: "6. Manners, Items & Daily Life",
+          tag: "礼仪、物品与日常综合（18句）",
+          type: "phrases",
+          items: [
+            {
+              en: "Take your feet off the table, Tom, it's rude!",
+              zh: "把你的脚从桌子上拿下来，汤姆，这很不礼貌！",
+            },
+            {
+              en: "Tell Julia that it's rude to eat with your mouth open.",
+              zh: "告诉茱莉亚，张着嘴吃东西很不礼貌。",
+              note: "with your mouth open 用……方式（with 复合结构表伴随）",
+            },
+            {
+              en: "I'd say it's rude to ask that question!",
+              zh: "我觉得问那个问题很不礼貌！",
+            },
+            {
+              en: "It's fun to experience a comedy with friends.",
+              zh: "和朋友一起看喜剧很有趣。",
+            },
+            {
+              en: "We went to see a comedian perform last night. She was extremely funny!",
+              zh: "我们昨晚去看了一位喜剧演员表演。她非常搞笑！",
+              note: "see sb. do sth. 看到某人做某事（全过程，用动词原形 perform）",
+            },
+            {
+              en: "If you'd prefer to stay home, we could watch a movie here.",
+              zh: "如果你宁愿待在家，我们可以在这儿看电影。",
+            },
+            {
+              en: "There aren't many bargains this week.",
+              zh: "这周没有太多特价商品。",
+              note: "bargain 特价商品（可数名词）",
+            },
+            {
+              en: "Not much stuff fits in this bag.",
+              zh: "没有多少东西能装进这个包里。",
+              note: "stuff 不可数，用 much 修饰，作主语时谓语用单数 fits",
+            },
+            {
+              en: "These square glasses look nice!",
+              zh: "这些方形的眼镜很好看！",
+              note: "glasses 复数名词，搭配 these 和复数动词 look",
+            },
+            {
+              en: "My jeans are too small.",
+              zh: "我的牛仔裤太小。",
+              note: "jeans 复数名词，谓语动词用复数 are",
+            },
+            {
+              en: "The boy looked for his book everywhere.",
+              zh: "男孩到处找了他的书。",
+            },
+            {
+              en: "He looked for his key everywhere.",
+              zh: "他到处找他的钥匙。",
+            },
+            {
+              en: "He plans to go fishing with his grandpa.",
+              zh: "他计划跟他的爷爷一起钓鱼。",
+              note: "plan to do sth. 后接动词原形（或 He plans to fish...）",
+            },
+            {
+              en: "Tom isn't afraid of insects.",
+              zh: "汤姆不怕虫子。",
+            },
+            {
+              en: "I want to trick or treat, but I'm too old.",
+              zh: "我想要玩不给糖就捣蛋，但是我太老了。",
+            },
+            {
+              en: "Is it warm here in the spring?",
+              zh: "在春天这里暖和吗？",
+            },
+            {
+              en: "Is the mayor very powerful?",
+              zh: "市长很有权势吗？",
+            },
+            {
+              en: "Finally, we have peace in our land!",
+              zh: "终于，我们的土地上有了和平！",
+            },
+          ],
+        },
+      ];
+
+      initNotesPage(DUOLINGO_QUIZ_NOTES);
+    </script>
+  </body>
+</html>
